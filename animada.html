@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráfica KPI - Animada (v0.0.13)</title>
+    <title>Gráfica KPI (v0.1.01) </title>
     <style>
         body {
             overflow: hidden;
@@ -26,7 +26,6 @@
         /* Donut progress fill */
         .donut-progress .donut-fill {
             fill: none;
-            stroke: url(#gradient);
             stroke-width: 10px;
             stroke-linecap: round;
             stroke-dasharray: 0 1000;
@@ -63,11 +62,24 @@
             return decodeURIComponent(results[2].replace(/\+/g, ' '));
         }
 
-        // Obtener el valor de KPI desde la URL
+        // Obtener el valor de KPI desde la URL y multiplicarlo por 2.5
         const kpiValue = (parseInt(getParameterByName('kpi')) || 0) * 2.5;
 
-        // Cambiar el valor en el estilo de la animación
+        // Determinar el color según el valor de kpiValue
         const fillCircle = document.querySelector('.donut-fill');
+        let strokeColor;
+        if (kpiValue < 50) {
+            strokeColor = 'red';
+        } else if (kpiValue < 75) {
+            strokeColor = 'yellow';
+        } else {
+            strokeColor = 'green';
+        }
+
+        // Asignar el color de relleno
+        fillCircle.style.stroke = strokeColor;
+
+        // Cambiar el valor en el estilo de la animación
         fillCircle.style.animation = `donut-fill-animation 2s linear forwards`;
         
         // Reemplazar el valor en la animación
