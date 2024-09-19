@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráfica KPI (v0.1.01) </title>
+    <title>Gráfica KPI (v0.1.002)</title>
     <style>
         body {
             overflow: hidden;
@@ -31,64 +31,34 @@
             stroke-dasharray: 0 1000;
             animation: donut-fill-animation 2s linear forwards;
         }
-        /* Animation */
-        @keyframes donut-fill-animation {
-            0% { stroke-dasharray: 0 250; }
-            100% { stroke-dasharray: *****ACA_VA_ELVALOR***** 250; }
-        }
     </style>
 </head>
 <body>
     <svg class='donut-progress' viewBox='0 0 100 100'>
-        <defs>
-            <linearGradient id='gradient' x1='0%' y1='0%' x2='100%' y2='0%'>
-                <stop offset='0%' stop-color='green'/>
-                <stop offset='100%' stop-color='green'/>
-            </linearGradient>
-        </defs>
         <circle class='donut-track' cx='50' cy='50' r='40'></circle>
         <circle class='donut-fill' cx='50' cy='50' r='40'></circle>
     </svg>
 
     <script>
-        // Función para obtener los parámetros de la URL
         function getParameterByName(name) {
             const url = window.location.href;
-            name = name.replace(/[\[\]]/g, '\\$&');
-            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                  results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+            const results = regex.exec(url);
+            return results ? decodeURIComponent(results[2].replace(/\+/g, ' ')) : null;
         }
 
-        // Obtener el valor de KPI desde la URL y multiplicarlo por 2.5
         const kpiValue = (parseInt(getParameterByName('kpi')) || 0) * 2.5;
 
         // Determinar el color según el valor de kpiValue
         const fillCircle = document.querySelector('.donut-fill');
-        let strokeColor;
-        if (kpiValue < 50) {
-            strokeColor = 'red';
-        } else if (kpiValue < 75) {
-            strokeColor = 'yellow';
-        } else {
-            strokeColor = 'green';
-        }
+        fillCircle.style.stroke = kpiValue < 125 ? 'red' : kpiValue < 188 ? 'yellow' : 'green';
 
-        // Asignar el color de relleno
-        fillCircle.style.stroke = strokeColor;
-
-        // Cambiar el valor en el estilo de la animación
-        fillCircle.style.animation = `donut-fill-animation 2s linear forwards`;
-        
-        // Reemplazar el valor en la animación
+        // Cambiar la animación con el valor de kpiValue
         const keyframes = `@keyframes donut-fill-animation {
             0% { stroke-dasharray: 0 250; }
             100% { stroke-dasharray: ${kpiValue} 250; }
         }`;
-
-        // Crear un estilo para los keyframes y añadirlo al head
+        
         const styleSheet = document.createElement("style");
         styleSheet.type = "text/css";
         styleSheet.innerText = keyframes;
