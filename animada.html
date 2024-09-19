@@ -38,7 +38,6 @@
         <circle class='donut-track' cx='50' cy='50' r='40'></circle>
         <circle class='donut-fill' cx='50' cy='50' r='40'></circle>
     </svg>
-
     <script>
         function getParameterByName(name) {
             const url = window.location.href;
@@ -46,8 +45,7 @@
             const results = regex.exec(url);
             return results ? decodeURIComponent(results[2].replace(/\+/g, ' ')) : null;
         }
-
-        const kpiValue = (parseInt(getParameterByName('kpi')) || 0) * 2.5;
+       const kpiValue = (parseInt(getParameterByName('kpi')) || 0) * 2.5;
 
         // Determinar el color según el valor de kpiValue
         const fillCircle = document.querySelector('.donut-fill');
