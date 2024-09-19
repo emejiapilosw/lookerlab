@@ -1,47 +1,45 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráfica de Media Dona</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f4;
-        }
-    </style>
-</head>
-<body>
-    <canvas id="myDoughnutChart" width="400" height="400"></canvas>
-    <script>
-        const ctx = document.getElementById('myDoughnutChart').getContext('2d');
-        const myDoughnutChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['KPI Alcanzado', 'KPI No Alcanzado'],
-                datasets: [{
-                    label: 'KPI',
-                    data: [70, 30], // Valores del KPI
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 1)', // Color para KPI Alcanzado
-                        'rgba(255, 99, 132, 1)'  // Color para KPI No Alcanzado
-                    ],
-                    borderWidth: 1,
-                }]
-            },
-            options: {
-                animation: {
-                    animateRotate: true, // Animar la rotación
-                    duration: 1500 // Duración de la animación
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-            }
-        });
-    </script>
-</body>
-</html>
+ <style>
+      body {
+      overflow: hidden;
+      margin: 0;
+      padding: 10;
+    }
+    /* Donut progress container */
+    .donut-progress {
+      position: relative;
+        width: 99vw;
+        height: 95vh;
+      transform: rotate(-90deg);
+    }
+    /* Donut progress track */
+    .donut-progress .donut-track {
+      fill: none;
+      stroke: #f2f2f2;
+      stroke-width: 10px;
+    }
+    /* Donut progress fill */
+    .donut-progress .donut-fill {
+      fill: none;
+      stroke: url(#gradient);
+      stroke-width: 10px;
+     stroke-linecap: round;
+      stroke-dasharray: 0 1000;
+      animation: donut-fill-animation 2s linear forwards;
+    }
+    /* Animation */
+    @keyframes donut-fill-animation {
+      0% { stroke-dasharray: 0 250; }
+      100% { stroke-dasharray:  " & vlr_Animacion & " 250; }
+    }
+  </style>
+<svg class='donut-progress' viewBox='0 0 100 100'>
+<defs>
+      <linearGradient id='gradient' x1='0%' y1='0%' x2='100%' y2='0%'>
+        <stop offset='0%' stop-color='" & vlr_ColorRelleno & "'/>
+        <stop offset='100%' stop-color='" & vlr_ColorRelleno & "'/>
+      </linearGradient>
+    </defs>
+    <circle class='donut-track' cx='50' cy='50' r='40'></circle>
+    <circle class='donut-fill' cx='50' cy='50' r='40'></circle>
+  </svg>
+  
